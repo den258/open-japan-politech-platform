@@ -283,31 +283,31 @@ if [[ "$OSTYPE" == darwin* ]] && ! command -v brew &>/dev/null; then
 fi
 
 # =============================================================================
-#  1. Docker  ～コンテナの魔法使い～
+#  1. Podman  ～コンテナの魔法使い～
 # =============================================================================
 section "🔍💎 まずは環境チェックだよ！ (ﾟ∀ﾟ)"
 draw_bar 0
 echo ""
 
-install_docker_mac() {
+install_podman_mac() {
   echo ""
   echo -e "  ${SKY}┌───────────────────────────────────────────────────────────${R}"
-  echo -e "  ${SKY}│${R}  ${B}🐳 Docker Desktop をインストールするよ！${R}"
+  echo -e "  ${SKY}│${R}  ${B}🐳 Podman をインストールするよ！${R}"
   echo -e "  ${SKY}│${R}  ${GRAY}brew でダウンロード (~1 GB)${R} ${PEACH}ちょっとだけ待ってね ☕${R}"
   echo -e "  ${SKY}│${R}  ${GRAY}↓ 進捗がリアルタイムで見えるよ${R}"
   echo -e "  ${SKY}└───────────────────────────────────────────────────────────${R}"
   echo ""
 
   # Show brew output directly — progress bar 見せる！
-  if brew install --cask docker 2>&1 | while IFS= read -r line; do
+  if brew install --cask podman 2>&1 | while IFS= read -r line; do
       echo -e "  ${DGRAY}│${R}  ${GRAY}${line}${R}"
     done; then
     echo ""
-    ok "🐳🎉💯 Docker Desktop インストール完了！すごい！ｸｼﾞﾗさんきた！"
+    ok "🐳🎉💯 Podman インストール完了！すごい！ｸｼﾞﾗさんきた！"
     echo ""
     echo -e "  ${GOLD}┌───────────────────────────────────────────────────────────${R}"
     echo -e "  ${GOLD}│${R}"
-    echo -e "  ${GOLD}│${R}  ${B}🐳 Docker がインストールできたよ！${R}"
+    echo -e "  ${GOLD}│${R}  ${B}🐳 Podman がインストールできたよ！${R}"
     echo -e "  ${GOLD}│${R}"
     echo -e "  ${GOLD}│${R}  ${WHT}あと少し！次の2ステップだけ：${R}"
     echo -e "  ${GOLD}│${R}"
@@ -329,41 +329,41 @@ install_docker_mac() {
   fi
 }
 
-if ! command -v docker &>/dev/null; then
+if ! command -v podman &>/dev/null; then
   if [[ "$OSTYPE" == darwin* ]] && command -v brew &>/dev/null; then
-    msg "${SKY}🍺 Homebrew 検出！Docker を自動インストールするね${R}"
-    install_docker_mac || die "Docker のインストールに失敗しちゃった…\n     ${CYN}brew install --cask docker${R} を手動で試してみて"
+    msg "${SKY}🍺 Homebrew 検出！Podman を自動インストールするね${R}"
+    install_podman_mac || die "Podman のインストールに失敗しちゃった…\n     ${CYN}brew install --cask podman${R} を手動で試してみて"
   elif [[ "$OSTYPE" == darwin* ]]; then
     echo ""
     echo -e "  ${PINK}┌───────────────────────────────────────────────────────────${R}"
-    echo -e "  ${PINK}│${R}  ${B}🐳 Docker Desktop が必要だよ！${R}"
-    echo -e "  ${PINK}│${R}  ${CYN}  brew install --cask docker${R}"
-    echo -e "  ${PINK}│${R}  ${WHT}or${R} ${CYN}https://docker.com/products/docker-desktop${R}"
+    echo -e "  ${PINK}│${R}  ${B}🐳 Podman が必要だよ！${R}"
+    echo -e "  ${PINK}│${R}  ${CYN}  brew install --cask podman${R}"
+    echo -e "  ${PINK}│${R}  ${WHT}or${R} ${CYN}https://podman.io/getting-started/installation${R}"
     echo -e "  ${PINK}│${R}  インストールしたら → ${CYN}bash setup.sh${R}"
     echo -e "  ${PINK}└───────────────────────────────────────────────────────────${R}"
     echo ""; exit 1
   else
     echo ""
     echo -e "  ${PINK}┌───────────────────────────────────────────────────────────${R}"
-    echo -e "  ${PINK}│${R}  ${B}🐳 Docker が必要だよ！${R}"
-    echo -e "  ${PINK}│${R}  ${CYN}  https://docs.docker.com/engine/install/${R}"
+    echo -e "  ${PINK}│${R}  ${B}🐳 Podman が必要だよ！${R}"
+    echo -e "  ${PINK}│${R}  ${CYN}  https://podman.io/getting-started/installation${R}"
     echo -e "  ${PINK}│${R}  インストールしたら → ${CYN}bash setup.sh${R}"
     echo -e "  ${PINK}└───────────────────────────────────────────────────────────${R}"
     echo ""; exit 1
   fi
 fi
 
-# Docker daemon — auto-start on macOS
-if ! docker info >> "$LOG" 2>&1; then
+# Podman daemon — auto-start on macOS
+if ! podman info >> "$LOG" 2>&1; then
   if [[ "$OSTYPE" == darwin* ]]; then
-    msg "${SKY}🐳 Docker Desktop をよいしょっと起動...${R}"
-    open -a Docker 2>/dev/null || true
+    msg "${SKY}🐳 Podman をよいしょっと起動...${R}"
+    open -a Podman 2>/dev/null || true
     _fi=0; _start=$SECONDS
     _frames=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
     printf "${HIDE}"
-    while ! docker info >> "$LOG" 2>&1; do
+    while ! podman info >> "$LOG" 2>&1; do
       _e=$((SECONDS - _start))
-      printf "\r  ${DGRAY}│${R}  \033[38;5;%sm%s${R} 🐳 Docker が目を覚ますのを待ってるよ... ${GRAY}(%ds)${R}${CLR}" \
+      printf "\r  ${DGRAY}│${R}  \033[38;5;%sm%s${R} 🐳 Podman が目を覚ますのを待ってるよ... ${GRAY}(%ds)${R}${CLR}" \
         "${RAINBOW_HUES[$((_fi % ${#RAINBOW_HUES[@]}))]}" \
         "${_frames[$((_fi % 10))]}" "$_e"
       _fi=$((_fi + 1))
@@ -373,71 +373,71 @@ if ! docker info >> "$LOG" 2>&1; then
 
         # Recovery step 1: Remove quarantine attribute (malware block)
         msg "${SKY}🔧 セキュリティブロックを解除してみるよ...${R}"
-        xattr -cr /Applications/Docker.app 2>/dev/null || true
+        xattr -cr /Applications/Podman.app 2>/dev/null || true
 
-        # Recovery step 2: Kill all Docker processes
-        msg "${SKY}🔧 Docker プロセスを全部止めて再起動するね...${R}"
-        killall Docker 2>/dev/null || true
-        killall com.docker.vmnetd 2>/dev/null || true
+        # Recovery step 2: Kill all Podman processes
+        msg "${SKY}🔧 Podman プロセスを全部止めて再起動するね...${R}"
+        killall Podman 2>/dev/null || true
+        killall com.podman.vmnetd 2>/dev/null || true
         sleep 2
 
-        # Recovery step 3: Restart Docker
-        open -a Docker 2>/dev/null || true
+        # Recovery step 3: Restart Podman
+        open -a Podman 2>/dev/null || true
 
         # Recovery step 4: Wait another 45 seconds
         _fi2=0; _start2=$SECONDS
         printf "${HIDE}"
-        _docker_ok=false
+        _podman_ok=false
         while [ $((SECONDS - _start2)) -lt 45 ]; do
           _e2=$((SECONDS - _start2))
           printf "\r  ${DGRAY}│${R}  \033[38;5;%sm%s${R} 🐳 リカバリー中...もうちょっと待ってね ${GRAY}(%ds/45s)${R}${CLR}" \
             "${RAINBOW_HUES[$((_fi2 % ${#RAINBOW_HUES[@]}))]}" \
             "${_frames[$((_fi2 % 10))]}" "$_e2"
           _fi2=$((_fi2 + 1))
-          if docker info >> "$LOG" 2>&1; then
-            _docker_ok=true
+          if podman info >> "$LOG" 2>&1; then
+            _podman_ok=true
             break
           fi
           sleep 1
         done
         printf "${SHOW}"
 
-        if [ "$_docker_ok" = true ]; then
-          printf "\r  ${DGRAY}│${R}  ${GRN}✔${R} 🐳 リカバリー成功！Docker 起きたよ！${CLR}\n"
+        if [ "$_podman_ok" = true ]; then
+          printf "\r  ${DGRAY}│${R}  ${GRN}✔${R} 🐳 リカバリー成功！Podman 起きたよ！${CLR}\n"
           break
         fi
 
-        # Recovery step 5: If brew is available, try reinstalling Docker
+        # Recovery step 5: If brew is available, try reinstalling Podman
         if command -v brew &>/dev/null; then
           echo ""
-          msg "${GOLD}🍺 brew で Docker を再インストールしてみるね...${R}"
-          killall Docker 2>/dev/null || true
+          msg "${GOLD}🍺 brew で Podman を再インストールしてみるね...${R}"
+          killall Podman 2>/dev/null || true
           sleep 1
-          if brew reinstall --cask docker 2>&1 | while IFS= read -r line; do
+          if brew reinstall --cask podman 2>&1 | while IFS= read -r line; do
               echo -e "  ${DGRAY}│${R}  ${GRAY}${line}${R}"
             done; then
-            ok "Docker 再インストール完了！起動するね..."
+            ok "Podman 再インストール完了！起動するね..."
 
-            # Recovery step 6: Start Docker after reinstall, wait 60s
-            open -a Docker 2>/dev/null || true
+            # Recovery step 6: Start Podman after reinstall, wait 60s
+            open -a Podman 2>/dev/null || true
             _fi3=0; _start3=$SECONDS
             printf "${HIDE}"
-            _docker_ok2=false
+            _podman_ok2=false
             while [ $((SECONDS - _start3)) -lt 60 ]; do
               _e3=$((SECONDS - _start3))
               printf "\r  ${DGRAY}│${R}  \033[38;5;%sm%s${R} 🐳 再インストール後の起動待ち... ${GRAY}(%ds/60s)${R}${CLR}" \
                 "${RAINBOW_HUES[$((_fi3 % ${#RAINBOW_HUES[@]}))]}" \
                 "${_frames[$((_fi3 % 10))]}" "$_e3"
               _fi3=$((_fi3 + 1))
-              if docker info >> "$LOG" 2>&1; then
-                _docker_ok2=true
+              if podman info >> "$LOG" 2>&1; then
+                _podman_ok2=true
                 break
               fi
               sleep 1
             done
             printf "${SHOW}"
 
-            if [ "$_docker_ok2" = true ]; then
+            if [ "$_podman_ok2" = true ]; then
               printf "\r  ${DGRAY}│${R}  ${GRN}✔${R} 🐳 再インストール後の起動成功！やったね！${CLR}\n"
               break
             fi
@@ -448,12 +448,12 @@ if ! docker info >> "$LOG" 2>&1; then
         echo ""
         echo -e "  ${PINK}┌───────────────────────────────────────────────────────────${R}"
         echo -e "  ${PINK}│${R}"
-        echo -e "  ${PINK}│${R}  ${HOT}(>_<)${R}  ${B}Docker がどうしても起きてくれない...${R}"
+        echo -e "  ${PINK}│${R}  ${HOT}(>_<)${R}  ${B}Podman がどうしても起きてくれない...${R}"
         echo -e "  ${PINK}│${R}"
         echo -e "  ${PINK}│${R}  ${WHT}こうしてみてね（かんたん3ステップ）:${R}"
         echo -e "  ${PINK}│${R}"
-        echo -e "  ${PINK}│${R}  ${GOLD}①${R} Docker Desktop アプリを手動で開いてみて"
-        echo -e "  ${PINK}│${R}     ${GRAY}Finder → アプリケーション → Docker をダブルクリック${R}"
+        echo -e "  ${PINK}│${R}  ${GOLD}①${R} Podman Desktop アプリを手動で開いてみて"
+        echo -e "  ${PINK}│${R}     ${GRAY}Finder → アプリケーション → Podman をダブルクリック${R}"
         echo -e "  ${PINK}│${R}"
         echo -e "  ${PINK}│${R}  ${GOLD}②${R} 画面右上のメニューバーに 🐳 クジラが出るまで待ってね"
         echo -e "  ${PINK}│${R}     ${GRAY}（30秒〜1分くらいかかるよ）${R}"
@@ -471,18 +471,24 @@ if ! docker info >> "$LOG" 2>&1; then
         exit 1
       fi
     done
-    printf "${SHOW}\r  ${DGRAY}│${R}  ${GRN}✔${R} 🐳☀️ Docker Desktop 起きた！おはよう！ﾑｸﾘ！${CLR}\n"
+    printf "${SHOW}\r  ${DGRAY}│${R}  ${GRN}✔${R} 🐳☀️ Podman 起きた！おはよう！ﾑｸﾘ！${CLR}\n"
   else
-    die "Docker が起動してないよ\n     ${CYN}sudo systemctl start docker${R}"
+    die "Podman が起動してないよ\n     ${CYN}sudo systemctl start podman${R}"
   fi
 fi
 
-COMPOSE="docker compose"
-if ! $COMPOSE version >> "$LOG" 2>&1; then
-  command -v docker-compose &>/dev/null && COMPOSE="docker-compose" || die "docker compose が見つからないよ…"
+if command -v podman-compose &>/dev/null; then
+  COMPOSE="podman-compose"
+else
+  COMPOSE="podman compose"
+  if ! $COMPOSE version >> "$LOG" 2>&1; then
+    die "podman compose が見つからないよ…"
+  fi
+  export PODMAN_COMPOSE_PROVIDER="podman-compose"
 fi
-DOCKER_VER=$(docker --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | /usr/bin/head -1)
-ok "🐳✨ Docker ${DOCKER_VER} — いい感じ！ﾖｼ！"
+COMPOSE_HINT="$COMPOSE"
+PODMAN_VER=$(podman --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | /usr/bin/head -1)
+ok "🐳✨ Podman ${PODMAN_VER} — いい感じ！ﾖｼ！"
 step_pct
 
 # =============================================================================
@@ -724,7 +730,7 @@ if node -e "$DB_CHECK_SCRIPT" >> "$LOG" 2>&1; then
   ok "🔗✅ Prisma → PostgreSQL 接続OK！データも確認済み！ﾊﾟｰﾌｪｸﾄ！"
 else
   wrn "Prisma 接続に問題あり — 念のため接続をリセットするね"
-  # Kill idle connections to free slots (use docker compose exec to auto-resolve container name)
+  # Kill idle connections to free slots (use podman compose exec to auto-resolve container name)
   $COMPOSE exec -T db psql -U postgres -d postgres \
     -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state = 'idle' AND pid <> pg_backend_pid();" \
     >> "$LOG" 2>&1 || true
@@ -1003,7 +1009,7 @@ echo ""
 
 echo -e "  ${GRAY}🛑 やめるとき${R}      ${DGRAY}→${R}  ${WHT}Ctrl+C${R}"
 echo -e "  ${GRAY}🔄 もう一回やる${R}    ${DGRAY}→${R}  ${WHT}bash setup.sh${R}"
-echo -e "  ${GRAY}🗑️  データも消す${R}    ${DGRAY}→${R}  ${WHT}docker compose down -v${R}"
+echo -e "  ${GRAY}🗑️  データも消す${R}    ${DGRAY}→${R}  ${WHT}podman compose down -v${R}"
 echo ""
 rainbow_bar
 echo ""
