@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 
 const NAV_ITEMS = [
   { href: "/", label: "ダッシュボード" },
+  { href: "/agenda", label: "現在の議題" },
   { href: "/bills", label: "法案" },
   { href: "/sessions", label: "会期" },
   { href: "/politicians", label: "議員" },

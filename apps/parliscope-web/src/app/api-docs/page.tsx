@@ -44,6 +44,12 @@ const ENDPOINTS: Endpoint[] = [
     path: "/api/stats",
     description: "ダッシュボード統計データを取得",
   },
+  {
+    method: "GET",
+    path: "/api/agenda/current",
+    description: "現在の国会議題（直近会議一覧）を取得",
+    params: ["days", "limit", "house"],
+  },
 ];
 
 export default function ApiDocsPage() {
