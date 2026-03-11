@@ -1,4 +1,4 @@
-import { SmoothScrollProvider, ScrollReveal } from "@ojpp/ui";
+import { ScrollReveal, SmoothScrollProvider } from "@ojpp/ui";
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";

@@ -37,10 +37,14 @@ export default async function AgendaPage({ searchParams }: PageProps) {
     <div className="min-h-screen bg-gradient-to-b from-[#0f0f23] to-[#1a1033]">
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="mb-3">
-          <h2 className="mb-2 text-3xl font-bold tracking-tight text-white">現在の国会議題（直近会議）</h2>
+          <h2 className="mb-2 text-3xl font-bold tracking-tight text-white">
+            現在の国会議題（直近会議）
+          </h2>
           <p className="text-[#8b949e]">
             国会会議録APIの会議一覧をもとに、直近の審議情報を表示しています。
-            <span className="ml-1">対象期間: {agenda.from} 〜 {agenda.until}</span>
+            <span className="ml-1">
+              対象期間: {agenda.from} 〜 {agenda.until}
+            </span>
           </p>
         </div>
 
@@ -93,8 +97,12 @@ export default async function AgendaPage({ searchParams }: PageProps) {
               className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4 transition-all hover:border-white/[0.12] hover:bg-white/[0.05]"
             >
               <div className="mb-2 flex flex-wrap items-center gap-2 text-xs">
-                <span className="rounded-full bg-indigo-500/20 px-2 py-1 text-indigo-300">第{meeting.session}回国会</span>
-                <span className="rounded-full bg-white/[0.06] px-2 py-1 text-[#9aa4b2]">{meeting.nameOfHouse}</span>
+                <span className="rounded-full bg-indigo-500/20 px-2 py-1 text-indigo-300">
+                  第{meeting.session}回国会
+                </span>
+                <span className="rounded-full bg-white/[0.06] px-2 py-1 text-[#9aa4b2]">
+                  {meeting.nameOfHouse}
+                </span>
                 <span className="text-[#6b7280]">{meeting.date}</span>
               </div>
 

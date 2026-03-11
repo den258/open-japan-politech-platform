@@ -59,13 +59,16 @@ export default function ApiDocsPage() {
         <div className="mb-8">
           <h2 className="mb-2 text-3xl font-bold tracking-tight text-white">API ドキュメント</h2>
           <p className="text-[#8b949e]">
-            ParliScope APIはRESTful設計で、JSON形式でデータを返します。認証不要で自由に利用できます。
+            ParliScope
+            APIはRESTful設計で、JSON形式でデータを返します。認証不要で自由に利用できます。
           </p>
         </div>
 
         <div className="mb-8">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6">
-            <h3 className="mb-3 text-lg font-semibold text-white">共通レスポンス形式（ページネーション）</h3>
+            <h3 className="mb-3 text-lg font-semibold text-white">
+              共通レスポンス形式（ページネーション）
+            </h3>
             <pre className="overflow-x-auto rounded-lg bg-[#0d1117] p-4 text-sm text-emerald-400">
               {`{
   "data": [...],
